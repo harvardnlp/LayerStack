@@ -1,0 +1,30 @@
+MergeStack
+  = head:CompleteStack tail:( "/" stack2:CompleteStack )* {
+     return tail.reduce(function(result, element) {
+        return result.concat([element[1]]);
+      }, [head]);
+  }
+
+ShiftStack
+  = stack:Layer ">" shiftx:Float "," shifty:Float {
+  console.log(shiftx);
+  return {"op": "shift", "child":stack, "value": (shiftx, shifty)};
+  }
+
+RotateStack
+  = stack:Layer "@" rotate:Float {
+  return {"op": "rotate", "child": stack, "value":rotate};
+  }
+
+Layer
+  = $ [A-Z]+ / "(" stack:MergeStack ")" {
+  return stack;
+  }
+
+Float
+  = [0-9\.]+ {
+  return parseFloat(text(), 10);
+  }
+
+CompleteStack
+  = stack:(ShiftStack / RotateStack  / Layer)
