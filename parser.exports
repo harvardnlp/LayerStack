@@ -8,7 +8,7 @@ MergeStack
 ShiftStack
   = stack:Layer ">" shiftx:Float "," shifty:Float {
   console.log(shiftx);
-  return {"op": "shift", "child":stack, "value": (shiftx, shifty)};
+  return {"op": "shift", "child":stack, "value": [shiftx, shifty]};
   }
 
 RotateStack
