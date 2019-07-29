@@ -3,7 +3,7 @@ parser = require("./parser.js");
 Raphael = require("raphael")
 parser.parse("A/S@10")
 // Creates canvas 320 × 200 at 10, 50
-var paper = Raphael(200, 200, 320, 200);
+var paper = Raphael("draw", 200, 700);
 function run() {
     var out = parser.parse(document.getElementById("area").value);
     paper.clear();
@@ -17,13 +17,13 @@ function run() {
             return [x, y];
         }
         if (typeof stack === 'string' || stack instanceof String){
-            text2 = paper.rect(x+dx-20, y+dy-5 ,40, 10);
+            text2 = paper.rect(x+dx-5, y+dy-5 ,10, 10);
             text = paper.text(x+dx, y+dy, stack);
 
             text.rotate(rotate);
             text2.rotate(rotate);
 
-            return [x, y+30];
+            return [x, y+15];
         }
         if (stack["op"] == "rotate") {
             rotate += stack["value"];
@@ -32,7 +32,7 @@ function run() {
         if (stack["op"] == "shift") {
             dx += stack["value"][0];
             dy += stack["value"][1];
-            return draw(stack["child"], x, y, dx, dy, rotate);
+            return draw(stack["child"], x, y+dy, dx, 0, rotate);
         }
 
     }
